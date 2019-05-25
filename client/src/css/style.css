@@ -1,0 +1,23 @@
+canvas {
+    padding-left: 0;
+    padding-right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border: solid .1em #0c0004;
+}
+div.wrapper {
+     margin: 0 auto;
+
+}
+div#winType {
+    height:50px;
+    margin:0 auto;
+    text-align: center;
+    font-size: large;
+}
+
+.buttonWrapper {
+    text-align: center;
+}
+
