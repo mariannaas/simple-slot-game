@@ -1,13 +1,13 @@
 function getElementById(element) {
     return document.getElementById(element);
 }
+
 function eventListener(selector, event, callback) {
-    document.querySelector(selector).addEventListener(event, function(e) {
+    document.querySelector(selector).addEventListener(event, function (e) {
         e.preventDefault();
         callback();
     })
 }
-
 
 function drawImage(context, canvas, sourceImage, index) {
     let img = new Image();
@@ -50,18 +50,28 @@ function getServerData(callback) {
         method = "GET",
         url = "http://127.0.0.1:3000/getOutcome";
 
-    xhttp.onreadystatechange = function () {
-        if (this.readyState === 4 && this.status === 200) {
-            callback(xhttp.responseText);
-        } //error handler!!
-    };
     xhttp.open(method, url, true);
+
+    xhttp.onreadystatechange = function () {
+        const notificationBarElement = getElementById("notificationBar");
+
+        if (this.readyState === 4) {
+            if (this.status === 200) {
+                callback(xhttp.responseText);
+                notificationBarElement.style.backgroundColor = "white";
+                notificationBarElement.innerHTML = "";
+            } else {
+                notificationBarElement.innerHTML = "Server is currently unavailable. Please reload the game or try it later!";
+                notificationBarElement.style.backgroundColor = "#ff3a29";
+                console.log("Status: " + this.status);
+            }
+        }
+    };
     xhttp.send();
 }
 
 
-
-function initAnimation(){
+function initAnimation() {
     document.addEventListener("DOMContentLoaded", (event) => {
         const canvas = getElementById("gameCanvas");
         const context = canvas.getContext("2d");
@@ -69,27 +79,28 @@ function initAnimation(){
             resize(canvas);
         }
         loadImages(context, canvas, [0, 1, 0]);
-         document.getElementById("spinButton").addEventListener("click", async (event) => {
-                getOutcome().then(response => {
+        document.getElementById("spinButton").addEventListener("click", async (event) => {
 
-                    let responseText = JSON.parse(response);
-                    let winTypeText = responseText.winType + ".";
+            getOutcome().then(response => {
 
-                    if (JSON.parse(responseText.isBonus) === true) {
-                        winTypeText += " And you have got a bonus spin!!!";
-                        getOutcome().then(bonus => {
+                let responseText = JSON.parse(response);
+                let winTypeText = responseText.winType + ".";
 
-                            let bonusText = JSON.parse(bonus);
-                            winTypeText += " " + bonusText.winType + ".";
-                            loadImages(context, canvas, bonusText.outcome);
+                if (JSON.parse(responseText.isBonus) === true) {
+                    winTypeText += " And you have got a bonus spin!!!";
+                    getOutcome().then(bonus => {
 
-                        });
-                    } else {
-                        loadImages(context, canvas, responseText.outcome);
-                    }
-                    getElementById("winType").innerHTML = winTypeText;
-                });
+                        let bonusText = JSON.parse(bonus);
+                        winTypeText += " " + bonusText.winType + ".";
+                        loadImages(context, canvas, bonusText.outcome);
+
+                    });
+                } else {
+                    loadImages(context, canvas, responseText.outcome);
+                }
+                getElementById("winType").innerHTML = winTypeText;
             });
+        });
     });
 }
 

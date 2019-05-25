@@ -1,3 +1,23 @@
+div#winType {
+    text-align: center;
+    font-size: 20px;
+    margin-top: 10px;
+    margin-bottom: 7px ;
+}
+
+#notificationBar {
+    text-align: center;
+    margin: 0 7px 7px 7px;
+    padding: 7px;
+    font-weight: bold;
+    background-color: white;
+    color: white;
+}
+
+div.wrapper {
+    margin: 0 auto;
+}
+
 canvas {
     padding-left: 0;
     padding-right: 0;
@@ -6,18 +26,8 @@ canvas {
     display: block;
     border: solid .1em #0c0004;
 }
-div.wrapper {
-     margin: 0 auto;
-
-}
-div#winType {
-    height:50px;
-    margin:0 auto;
-    text-align: center;
-    font-size: large;
-}
 
 .buttonWrapper {
     text-align: center;
+    margin-top: 7px;
 }
-
