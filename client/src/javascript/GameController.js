@@ -6,11 +6,8 @@ export default class GameController {
         this.gameModel = new GameModel();
     }
 
-
     processOutcome() {
         this.gameModel.getOutcome().then(response => {
-            console.log('Got response: ', response);
-
             setTimeout(function () {
                 this.gameView.loadImages(response.outcome);
 
@@ -30,20 +27,19 @@ export default class GameController {
         });
     }
 
-    initAnimation() {
+    initSpin() {
         document.addEventListener("DOMContentLoaded", (event) => {
-            const canvas = document.getElementById("gameCanvas");
-            const context = canvas.getContext("2d");
+            this.canvas = document.getElementById("gameCanvas");
+            this.context = this.canvas.getContext("2d");
             this.spinButton = document.getElementById("spinButton");
 
-            this.gameView = new GameView(canvas, context, this.spinButton);
-            if (window.innerWidth < canvas.width) {
+            this.gameView = new GameView(this.canvas, this.context, this.spinButton);
+            if (window.innerWidth < this.canvas.width) {
                 this.gameView.resizeCanvas();
             }
             this.gameView.loadImages([0, 1, 0]);
             this.spinButton.addEventListener("click", async (event) => {
                 this.gameView.toggleButtonState(this.spinButton);
-                console.log('CLiked on spin button');
                 this.processOutcome();
             });
         });

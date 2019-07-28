@@ -2,6 +2,7 @@ export default class GameModel {
     constructor() {
 
     }
+
     getOutcome() {
         const spinOutcome = () => new Promise((resolve, reject) => {
             let xhttp = new XMLHttpRequest(), //create request to server

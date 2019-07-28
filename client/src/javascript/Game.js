@@ -2,4 +2,4 @@ import GameController from './GameController.js';
 
 const gameController = new GameController();
 
-gameController.initAnimation();
+gameController.initSpin();
