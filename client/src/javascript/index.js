@@ -98,9 +98,9 @@ function initAnimation() {
     document.addEventListener("DOMContentLoaded", (event) => {
         const canvas = getElementById("gameCanvas");
         const context = canvas.getContext("2d");
-         if (window.innerWidth < canvas.width) {
-             resizeCanvas(canvas);
-         }
+        if (window.innerWidth < canvas.width) {
+            resizeCanvas(canvas);
+        }
         loadImages(context, canvas, [0, 1, 0]);
         const spinButton = getElementById("spinButton");
         spinButton.addEventListener("click", async (event) => {
