@@ -6,14 +6,14 @@ export default class GameController {
         this.gameModel = new GameModel();
     }
 
-    processOutcome() {
+    spin() {
         this.gameModel.getOutcome().then(response => {
             setTimeout(function () {
                 this.gameView.loadImages(response.outcome);
 
                 if (response.isBonus) {
                     this.gameView.showSpinOutcome(response.winType + "\n Bonus Spin!");
-                    this.processOutcome();
+                    this.spin();
 
                 } else {
                     this.gameView.showSpinOutcome(response.winType);
@@ -27,7 +27,7 @@ export default class GameController {
         });
     }
 
-    initSpin() {
+    initGame() {
         document.addEventListener("DOMContentLoaded", (event) => {
             this.canvas = document.getElementById("gameCanvas");
             this.context = this.canvas.getContext("2d");
@@ -40,7 +40,7 @@ export default class GameController {
             this.gameView.loadImages([0, 1, 0]);
             this.spinButton.addEventListener("click", async (event) => {
                 this.gameView.toggleButtonState(this.spinButton);
-                this.processOutcome();
+                this.spin();
             });
         });
     }
